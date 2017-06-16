@@ -49,7 +49,7 @@ body {
     left: -25px;
 }
 
-.img.thumb {
+.img-thumb {
     width: auto;
     height: 200px;
 }
@@ -60,4 +60,9 @@ body {
 img.details {
     width: 33%;
     margin: 15px auto;
+}
+
+.table-auto {
+    width: auto;
+    margin: 0 auto;
 }
