@@ -6,6 +6,14 @@ include 'includes/navigation.php';
 $sql = "select * from `brand` order by brand";
 $result = $db->query($sql);
 $errors = array();
+
+//delete Brand
+if (isset($_GET['delete']) && !empty($_GET['delete'])) {
+    $delete_id = (int)$_GET['delete'];
+    $delete_id = sanitize($delete_id);
+    echo $delete_id;
+}
+
 //if add form is submitted
 if (isset($_POST['add_submit'])) {
     $brand = sanitize($_POST['brand']);
@@ -29,7 +37,7 @@ if (isset($_POST['add_submit'])) {
         //Add brand to database
         $sql = "insert into brand (brand) VALUES ('$brand')";
         $db->query($sql);
-        header('Location: /brands.php');
+      //  header('Location: brands.php');
     }
 }
 
