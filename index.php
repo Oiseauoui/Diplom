@@ -4,6 +4,9 @@
       include "includes/navigations.php";
       include "includes/headerfull.php";
       include "includes/leftbar.php";
+
+      $sql = "select * from `products` where featured = 1";
+      $featured = $db->query($sql);
       ?>
 
     <!--Main content-->
@@ -11,61 +14,18 @@
     <div class="col-md-8">
     <div class="row">
         <h2 class="text-center">Ассoртимент товара</h2>
-        <div class="col-md-3">
-            <h4>Levis Jeans</h4>
-            <img src="images/products/men4.png" alt="Levis Jeans"/>
-            <p class="list-price text-danger">Прайс-лист:<s>660.59</s></p>
-            <p class="price">Наша цена:499.00</p>
-            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#details-1">Подробнее</button>
-        </div>
+        <?php while($product  = mysqli_fetch_assoc($featured)) : ?>
+            <?php //var_dump($product) ?>
+        <div class="col-md-3 text-center">
 
-        <div class="col-md-3">
-            <h4>Levis Jeans</h4>
-            <img src="images/products/men4.png" alt="Levis Jeans"/>
-            <p class="list-price text-danger">Прайс-лист:<s>660.59</s></p>
-            <p class="price">Наша цена:499.00</p>
-            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#details-1">Подробнее</button>
-        </div>
+            <h4><?= $product['title']; ?></h4>
 
-        <div class="col-md-3">
-            <h4>Levis Jeans</h4>
-            <img src="images/products/men4.png" alt="Levis Jeans"/>
-            <p class="list-price text-danger">Прайс-лист:<s>660.59</s></p>
-            <p class="price">Наша цена:499.00</p>
+            <img src="<?= $product['image']; ?>" alt="<?= $product['title']; ?>" class="img-thumb"/>
+            <p class="list-price text-danger">Прайс-лист:<s><?= $product['list_price']; ?> грн.</s></p>
+            <p class="price">Наша цена: <?= $product['price']; ?> грн.</p>
             <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#details-1">Подробнее</button>
         </div>
-
-        <div class="col-md-3">
-            <h4>Levis Jeans</h4>
-            <img src="images/products/men4.png" alt="Levis Jeans"/>
-            <p class="list-price text-danger">Прайс-лист:<s>660.59</s></p>
-            <p class="price">Наша цена:499.00</p>
-            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#details-1">Подробнее</button>
-        </div>
-
-        <div class="col-md-3">
-            <h4>Holister shirt</h4>
-            <img src="images/products/men1.png" alt="Holister shirt"/>
-            <p class="list-price text-danger">Прайс-лист:<s>660.59</s></p>
-            <p class="price">Наша цена:499.00</p>
-            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#details-1">Подробнее</button>
-        </div>
-
-        <div class="col-md-3">
-            <h4>Fancy Shoes</h4>
-            <img src="images/products/women6.png" alt="Fancy Shoes"/>
-            <p class="list-price text-danger">Прайс-лист:<s>345.59</s></p>
-            <p class="price">Наша цена:299.00</p>
-            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#details-1">Подробнее</button>
-        </div>
-
-        <div class="col-md-3">
-            <h4>Levis Jeans</h4>
-            <img src="images/products/men4.png" alt="Levis Jeans"/>
-            <p class="list-price text-danger">Прайс-лист:<s>660.59</s></p>
-            <p class="price">Наша цена:499.00</p>
-            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#details-1">Подробнее</button>
-        </div>
+        <?php  endwhile; ?>
    </div>
 </div>
 
