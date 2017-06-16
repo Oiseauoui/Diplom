@@ -23,14 +23,13 @@
             <img src="<?= $product['image']; ?>" alt="<?= $product['title']; ?>" class="img-thumb"/>
             <p class="list-price text-danger">Прайс-лист:<s><?= $product['list_price']; ?> грн.</s></p>
             <p class="price">Наша цена: <?= $product['price']; ?> грн.</p>
-            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#details-1">Подробнее</button>
+            <button type="button" class="btn btn-sm btn-success" onclick="detailsmodal(<?= $product['id']; ?>)">Подробнее</button>
         </div>
         <?php  endwhile; ?>
    </div>
 </div>
 
 <?php
-include "includes/detailsmodal.php";
 include "includes/rightbar.php";
 include "includes/footer.php";
 ?>
