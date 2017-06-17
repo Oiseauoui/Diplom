@@ -5,6 +5,7 @@
             <!--Menu items-->
             <li><a href="/admin/brands.php">Brands</a></li>
             <li><a href="/admin/categories.php">Категории</a></li>
+            <li><a href="/admin/products.php">Продукция</a></li>
 
             <!--Одежда
             <li class="dropdown">
