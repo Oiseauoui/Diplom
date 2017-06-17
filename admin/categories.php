@@ -6,6 +6,17 @@ include 'includes/navigation.php';
 $sql = "select * from categories where parent = 0";
 $result = $db->query($sql);
 $errors = array();
+$category = '';
+$post_parent = '';
+
+//Edit Category
+if (isset($_GET['edit']) && !empty($_GET['edit'])) {
+    $edit_id = (int)$_GET['edit'];
+    $edit_id = sanitize($edit_id);
+    $edit_sql = "select * from categories where id = '$edit_id'";
+    $edit_result = $db->query($edit_sql);
+    $edit_category = mysqli_fetch_assoc($edit_result);
+}
 
 //Delete Category
 if (isset($_GET['delete']) && !empty($_GET['delete'])) {
@@ -25,9 +36,13 @@ if (isset($_GET['delete']) && !empty($_GET['delete'])) {
 
 //Process Form
 if (isset($_POST) && !empty($_POST)) {
-    $parent = sanitize($_POST['parent']);
+    $post_parent = sanitize($_POST['parent']);
     $category = sanitize($_POST['category']);
-    $sqlform = "select * from categories where category = '$category' and parent = '$parent'";
+    $sqlform = "select * from categories where category = '$category' and parent = '$post_parent'";
+    if (isset($_GET['edit'])) {
+        $id = $edit_category['id'];
+        $sqlform = "select * from categories where category = '$category' and parent = '$post_parent' and id != '$id'";
+    }
     $fresult = $db->query($sqlform);
     $count = mysqli_num_rows($fresult);
     //if category is blank
@@ -37,7 +52,7 @@ if (isset($_POST) && !empty($_POST)) {
 
     //if exist in the database
     if ($count >0) {
-        $errors[] .= $category. ' Уже существует. Пожалуйста, выберети новую категорию.';
+        $errors[] .= $category. ' уже существует. Пожалуйста, выберети новую категорию.';
     }
 //Display Errors or Update Database
     if (!empty($errors)) {
@@ -50,35 +65,51 @@ if (isset($_POST) && !empty($_POST)) {
          </script>
         <?php }else {
         //update database
-        $updatesql = "insert into categories (category, parent) VALUES ('$category', '$parent')";
+        $updatesql = "insert into categories (category, parent) VALUES ('$category', '$post_parent')";
+        if (isset($_GET['edit'])) {
+            $updatesql = "update categories set category = '$category', parent = '$post_parent' where  id = '$edit_id'";
+        }
         $db->query($updatesql);
         header('Location: categories.php');
     }
 }
+
+$category_value = '';
+$parent_value = 0;
+if (isset($_GET['edit'])) {
+    $category_value = $edit_category['category'];
+    $parent_value = $edit_category['parent'];
+}else {
+    if (isset($_POST)) {
+        $category_value = $category;
+        $parent_value = $post_parent;
+    }
+}
+
 ?>
 <h2 class="text-center">Категории</h2><hr>
 <div class="row">
 
     <!--Form-->
     <div class="col-md-6">
-        <form class="form" action="categories.php" method="post">
-            <legend>Добавить категорию</legend>
+        <form class="form" action="categories.php<?=((isset($_GET['edit']))?'?edit= '.$edit_id: '') ; ?> " method="post">
+            <legend><?= ((isset($_GET['edit']))?'Редактировать': 'Добавить ') ?> категорию</legend>
             <div id="errors"></div>
             <div class="form-group">
                 <label for="parent">Источник</label>
                 <select class="form-control" name="parent" id="parent">
-                    <option value="0">Источник</option>
+                    <option value="0"<?= (($parent_value == 0)? 'selected="selected"': '') ;?> >Источник</option>
                     <?php while ($parent=mysqli_fetch_assoc($result)):?>
-                    <option value="<?=$parent['id'] ?>"><?=$parent['category']; ?></option>
+                    <option value="<?=$parent['id'] ?>"<?=(($parent_value == $parent['id'])?'selected="selected"':'') ?>><?=$parent['category']; ?></option>
                      <?php endwhile; ?>
                  </select>
             </div>
             <div class="form-group">
                <label for="category">Категории</label>
-                <input type="text" class="form-control" id="category" name="category">
+                <input type="text" class="form-control" id="category" name="category" value="<?=$category_value ?>">
             </div>
             <div class="form-group"></div>
-            <input type="submit" value="Add Category" class="btn btn-success">
+            <input type="submit" value="<?= ((isset($_GET['edit']))?'Редактировать': 'Добавить');?> категорию" class="btn btn-success">
         </form>
     </div>
     <!--Category Table-->

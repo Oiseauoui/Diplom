@@ -40,32 +40,41 @@
       <file leaf-file-name="categories.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/categories.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33">
-              <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+            <state relative-caret-position="239">
+              <caret line="74" column="1" lean-forward="true" selection-start-line="74" selection-start-column="1" selection-end-line="74" selection-end-column="1" />
               <folding>
-                <marker date="1497718045771" expanded="true" signature="136:177" ph="select * fro... categories" />
-                <marker date="1497718045771" expanded="true" signature="393:441" ph="select * fro... categories" />
-                <marker date="1497718045771" expanded="true" signature="574:620" ph="delete from " />
-                <marker date="1497718045771" expanded="true" signature="669:715" ph="delete from " />
-                <marker date="1497718045771" expanded="true" signature="942:995" ph="select * fro... categories" />
-                <marker date="1497718045771" expanded="true" signature="942:1018" ph="select * fro... categories" />
-                <marker date="1497718045771" expanded="true" signature="1735:1808" ph="insert into categories... " />
-                <marker date="1497718045771" expanded="true" signature="1957:2489" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="2001:2489" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="2067:2489" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="2188:2489" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="2313:2489" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="2657:2818" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="3024:3407" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="3069:3407" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="3089:3167" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="3187:3407" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="3227:3268" ph="select * fro... categories" />
-                <marker date="1497718045771" expanded="true" signature="3436:3488" ph="select * fro... categories" />
-                <marker date="1497718045771" expanded="true" signature="3582:3614" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="3689:3750" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="4147:4182" ph="..." />
-                <marker date="1497718045771" expanded="true" signature="4275:4335" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="136:177" ph="select * fro... categories" />
+                <marker date="1497729018788" expanded="true" signature="419:465" ph="select * fro... categories" />
+                <marker date="1497729018788" expanded="true" signature="733:781" ph="select * fro... categories" />
+                <marker date="1497729018788" expanded="true" signature="914:960" ph="delete from " />
+                <marker date="1497729018788" expanded="true" signature="1009:1055" ph="delete from " />
+                <marker date="1497729018788" expanded="true" signature="1287:1340" ph="select * fro... categories" />
+                <marker date="1497729018788" expanded="true" signature="1287:1368" ph="select * fro... categories" />
+                <marker date="1497729018788" expanded="true" signature="1459:1512" ph="select * fro... categories" />
+                <marker date="1497729018788" expanded="true" signature="1459:1540" ph="select * fro... categories" />
+                <marker date="1497729018788" expanded="true" signature="1459:1556" ph="select * fro... categories" />
+                <marker date="1497729018788" expanded="true" signature="2279:2357" ph="insert into categories... " />
+                <marker date="1497729018788" expanded="true" signature="2422:2466" ph="update categ... " />
+                <marker date="1497729018788" expanded="true" signature="2422:2491" ph="update categ... " />
+                <marker date="1497729018788" expanded="true" signature="2422:2514" ph="update categ... " />
+                <marker date="1497729018788" expanded="true" signature="2956:3654" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="3000:3067" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="3000:3654" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="3122:3654" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="3295:3654" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="3420:3654" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="3887:4078" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="4341:4724" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="4386:4724" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="4406:4484" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="4504:4542" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="4504:4724" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="4544:4585" ph="select * fro... categories" />
+                <marker date="1497729018788" expanded="true" signature="4753:4805" ph="select * fro... categories" />
+                <marker date="1497729018788" expanded="true" signature="4899:4931" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="5006:5067" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="5464:5499" ph="..." />
+                <marker date="1497729018788" expanded="true" signature="5592:5652" ph="..." />
               </folding>
             </state>
           </provider>
@@ -205,8 +214,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="707" />
-    <option name="width" value="679" />
+    <option name="x" value="877" />
+    <option name="width" value="496" />
     <option name="height" value="724" />
   </component>
   <component name="ProjectView">
@@ -391,15 +400,15 @@
       <workItem from="1497540432495" duration="6107000" />
       <workItem from="1497577168844" duration="31163000" />
       <workItem from="1497667257708" duration="10625000" />
-      <workItem from="1497708300244" duration="4359000" />
+      <workItem from="1497708300244" duration="7997000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70251000" />
+    <option name="totallyTimeSpent" value="73889000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="707" y="0" width="679" height="724" extended-state="0" />
+    <frame x="877" y="0" width="496" height="724" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26165804" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -473,29 +482,38 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1497718045771" expanded="true" signature="136:177" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="393:441" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="574:620" ph="delete from " />
-            <marker date="1497718045771" expanded="true" signature="669:715" ph="delete from " />
-            <marker date="1497718045771" expanded="true" signature="942:995" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="942:1018" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="1735:1808" ph="insert into categories... " />
-            <marker date="1497718045771" expanded="true" signature="1957:2489" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="2001:2489" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="2067:2489" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="2188:2489" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="2313:2489" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="2657:2818" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3024:3407" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3069:3407" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3089:3167" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3187:3407" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3227:3268" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="3436:3488" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="3582:3614" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3689:3750" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="4147:4182" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="4275:4335" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="136:177" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="419:465" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="733:781" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="914:960" ph="delete from " />
+            <marker date="1497729018788" expanded="true" signature="1009:1055" ph="delete from " />
+            <marker date="1497729018788" expanded="true" signature="1287:1340" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="1287:1368" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="1459:1512" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="1459:1540" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="1459:1556" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="2279:2357" ph="insert into categories... " />
+            <marker date="1497729018788" expanded="true" signature="2422:2466" ph="update categ... " />
+            <marker date="1497729018788" expanded="true" signature="2422:2491" ph="update categ... " />
+            <marker date="1497729018788" expanded="true" signature="2422:2514" ph="update categ... " />
+            <marker date="1497729018788" expanded="true" signature="2956:3654" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3000:3067" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3000:3654" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3122:3654" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3295:3654" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3420:3654" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3887:4078" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4341:4724" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4386:4724" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4406:4484" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4504:4542" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4504:4724" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4544:4585" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="4753:4805" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="4899:4931" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="5006:5067" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="5464:5499" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="5592:5652" ph="..." />
           </folding>
         </state>
       </provider>
@@ -881,32 +899,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/categories.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+        <state relative-caret-position="239">
+          <caret line="74" column="1" lean-forward="true" selection-start-line="74" selection-start-column="1" selection-end-line="74" selection-end-column="1" />
           <folding>
-            <marker date="1497718045771" expanded="true" signature="136:177" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="393:441" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="574:620" ph="delete from " />
-            <marker date="1497718045771" expanded="true" signature="669:715" ph="delete from " />
-            <marker date="1497718045771" expanded="true" signature="942:995" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="942:1018" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="1735:1808" ph="insert into categories... " />
-            <marker date="1497718045771" expanded="true" signature="1957:2489" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="2001:2489" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="2067:2489" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="2188:2489" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="2313:2489" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="2657:2818" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3024:3407" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3069:3407" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3089:3167" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3187:3407" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3227:3268" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="3436:3488" ph="select * fro... categories" />
-            <marker date="1497718045771" expanded="true" signature="3582:3614" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="3689:3750" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="4147:4182" ph="..." />
-            <marker date="1497718045771" expanded="true" signature="4275:4335" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="136:177" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="419:465" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="733:781" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="914:960" ph="delete from " />
+            <marker date="1497729018788" expanded="true" signature="1009:1055" ph="delete from " />
+            <marker date="1497729018788" expanded="true" signature="1287:1340" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="1287:1368" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="1459:1512" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="1459:1540" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="1459:1556" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="2279:2357" ph="insert into categories... " />
+            <marker date="1497729018788" expanded="true" signature="2422:2466" ph="update categ... " />
+            <marker date="1497729018788" expanded="true" signature="2422:2491" ph="update categ... " />
+            <marker date="1497729018788" expanded="true" signature="2422:2514" ph="update categ... " />
+            <marker date="1497729018788" expanded="true" signature="2956:3654" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3000:3067" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3000:3654" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3122:3654" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3295:3654" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3420:3654" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="3887:4078" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4341:4724" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4386:4724" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4406:4484" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4504:4542" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4504:4724" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="4544:4585" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="4753:4805" ph="select * fro... categories" />
+            <marker date="1497729018788" expanded="true" signature="4899:4931" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="5006:5067" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="5464:5499" ph="..." />
+            <marker date="1497729018788" expanded="true" signature="5592:5652" ph="..." />
           </folding>
         </state>
       </provider>
