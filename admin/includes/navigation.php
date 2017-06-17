@@ -4,6 +4,7 @@
         <ul class="nav navbar-nav">
             <!--Menu items-->
             <li><a href="/admin/brands.php">Brands</a></li>
+            <li><a href="/admin/categories.php">Категории</a></li>
 
             <!--Одежда
             <li class="dropdown">
