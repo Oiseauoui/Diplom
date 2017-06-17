@@ -7,6 +7,22 @@ $sql = "select * from categories where parent = 0";
 $result = $db->query($sql);
 $errors = array();
 
+//Delete Category
+if (isset($_GET['delete']) && !empty($_GET['delete'])) {
+    $delete_id = (int)$_GET['delete'];
+    $delete_id = sanitize($delete_id);
+    $sql = "select * from categories where id = '$delete_id'";
+    $result = $db->query($sql);
+    $category = mysqli_fetch_assoc($result);
+    if ($category['parent'] == 0) {
+        $dsql = "delete from categories where id = '$delete_id'";
+        $db->query($dsql);
+    }
+    $dsql = "delete from categories where id = '$delete_id'";
+    $db->query($dsql);
+    header('Location: categories.php');
+}
+
 //Process Form
 if (isset($_POST) && !empty($_POST)) {
     $parent = sanitize($_POST['parent']);
