@@ -6,6 +6,55 @@ include 'includes/navigation.php';
 if (isset($_GET['add'])){
 $brandQuery = $db->query("select * from brand order by brand");
 $parentQuery = $db->query("select * from categories where parent = 0 order by category");
+if ($_POST){
+    if (!empty($_POST['sizes'])) {
+        $sizeString = sanitize($_POST['sizes']);
+        $sizeString = rtrim($sizeString, ',');
+         echo  $sizeString;
+        $sizesArray = explode(',',$sizeString );
+        $sArray = array();
+        $qArray = array();
+        foreach ($sizesArray as $ss) {
+            $s = explode(':', $ss);
+            $sArray[] = $s[0];
+            $qArray[] = $s[1];
+        }
+    }else{$sizesArray = array();
+    }
+     $reqiired = array('title', 'brand', 'price', 'parent', 'child', 'sizes');
+     foreach ($reqiired as $field) {
+         if ($_POST[$field] == '') {
+             $errors[] = 'Все поля должны быть заполнены.';
+             break;
+         }
+     }
+     if (!empty($_FILES)) {
+         var_dump($_FILES);
+         $photo = $_FILES['photo'];
+         $name = $photo['name'];
+         $nameArray = explode('.',$name);
+         $fileName = $nameArray[0];
+         $fileExt = $nameArray[1];
+         $mime = explode('/',$photo['type']);
+         $mimeType = $mime[0];
+         $mimeExt = $mime[1];
+         $tmpLoc = $photo['tmp_name'];
+         $fileSize = $photo['size'];
+         $allowed = array('png', 'jpg', 'jpeg', 'gif');
+         if ($mimeType != 'image') {
+             $errors[] = 'Фаил должен быть изображением.';
+         }
+         if(!in_array($fileExt, $allowed)) {
+    $errors[] = 'Изображения должны быть в формате png, jpg, jpeg, gif.';
+         }
+     }
+     if (!empty($errors)){
+         echo display_errors($errors);
+     }else{
+         //update file and insert into database
+     }
+}
+
 ?>
     <h2 class="text-center">Добавить новое изделие</h2>
     <hr>
@@ -47,11 +96,11 @@ $parentQuery = $db->query("select * from categories where parent = 0 order by ca
         <input type="text" id="list_price" name="list_price" class="form-control" value="<?=((isset($_POST['list_price']))?sanitize($_POST['list_price']) : ''); ?>">
         </div>
         <div class="form-group col-md-3">
-            <label>Характеристики и размеры:</label>
+            <label>Количество и размеры:</label>
         <button class="btn btn-default form-control" onclick="jQuery('#sizesModal').modal('toggle'); return false;">Характеристики и размеры</button>
         </div>
         <div class="form-group col-md-3">
-            <label for="sizes">Размеры </label>
+            <label for="sizes">Предворительное количество </label>
             <input type="text" class="form-control" name="size" id="sizes" value="<?=((isset($_POST['sizes']))?$_POST['sizes']: '');?>" readonly>
         </div>
         <div class="form-group col-md-6">
@@ -67,19 +116,30 @@ $parentQuery = $db->query("select * from categories where parent = 0 order by ca
         </div><div class="clearfix"></div>
     </form>
     <!-- Modal-->
-    <div class="modal fade" id="sizesModal" tabindex="-1" role="dialog" aria-labelledby="myM">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="sizesModal" tabindex="-1" role="dialog" aria-labelledby="sizesModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Modal title</h4>
+                    <h4 class="modal-title" id="sizesModalLabel">Размер и количество</h4>
                 </div>
                 <div class="modal-body">
-                    <p>One fine body&hellip;</p>
+                    <div class="container-fluid">
+                    <?php for($i=1; $i <=12; $i++): ?>
+                    <div class="form-group col-md-4">
+                        <label for="size<?=$i; ?>">Размер: </label>
+                        <input type="text" name="size<?=$i;?>" id="size<?=$i;?>" value="<?=((!empty($sArray[$i-1]))?$sArray[$i-1] :''); ?>" class="form-control">
+                    </div>
+                        <div class="form-group col-md-2">
+                            <label for="qty<?=$i; ?>">Количество</label>
+                            <input type="number" name="qty<?=$i; ?>" id="qty<?=$i; ?>" value="<?=((!empty($qArray[$i-1]))?$qArray[$i-1] :''); ?>" min="0" class="form-control">
+                        </div>
+                   <?php endfor;  ?>
+                </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"  onclick="updateSizes();jQuery('#sizesModal').modal('toggle'); return false;">Сохранить изменения</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -145,6 +205,7 @@ $parentQuery = $db->query("select * from categories where parent = 0 order by ca
         <?php endwhile; ?>
         </tbody>
     </table>
+
     <?php
 }
 include 'includes/footer.php';
