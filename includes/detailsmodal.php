@@ -10,11 +10,12 @@ $sql = "select `brand` from `brand` where id ='$brand_id'";
 $brand_query = $db->query($sql);
 $brand = mysqli_fetch_assoc($brand_query);
 $sizestring = $product['sizes'];
+$sizestring = rtrim($sizestring, ',');
 $size_array = explode(',', $sizestring);
 ?>
 
 <?php ob_start(); ?>
-<?= $sizestring; ?>
+
 <div class="modal fade details-1" id="details-modal" tabindex="-1" role="dialog" aria-labelledby="details-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -35,7 +36,7 @@ $size_array = explode(',', $sizestring);
                     </div>
                     <div class="col-sm-6">
                         <h4>Подробности</h4>
-                        <p><?= $product['description']; ?></p>
+                        <p><?= nl2br($product['description']);?> </p>
                         <hr>
                         <p>Цена: <?= $product['price']; ?> грн.</p>
                         <p>Brand: <?= $brand['brand']; ?></p>

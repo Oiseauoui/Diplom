@@ -3,10 +3,36 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/core/init.php';
 include 'includes/head.php';
 include 'includes/navigation.php';
 //$selected = sanitize($_POST['selected']);
-if (isset($_GET['add'])){
+if (isset($_GET['add']) || isset($_GET['edit'])){
 $brandQuery = $db->query("select * from brand order by brand");
 $parentQuery = $db->query("select * from categories where parent = 0 order by category");
+$title = ((isset($_POST['title']) && $_POST['title'] != '')?sanitize($_POST['title']):'');
+$brand = ((isset($_POST['brand']) && $_POST['brand'] != '')?sanitize($_POST['brand']):'');
+$parent = ((isset($_POST['parent']) && $_POST['parent'] != '')?sanitize($_POST['parent']):'');
+$category = ((isset($_POST['child']) && $_POST['child'] != '')?sanitize($_POST['child']):'');
+
+
+if (isset($_GET['edit'])) {
+    $edit_id = (int)$_GET['edit'];
+    $productresults = $db->query("select * from products where id = '$edit_id'");
+    $product = mysqli_fetch_assoc($productresults);
+    $category = ((isset($_POST['child']) && $_POST['child'] != '')?sanitize($_POST['child']) : $product['categories']);
+    $title = ((isset($_POST['title']) && !empty($_POST['title']))?sanitize($_POST['title']): $product['title']);
+    $brand = ((isset($_POST['brand']) && !empty($_POST['brand']))?sanitize($_POST['brand']): $product['brand']);
+    $parentQ = $db->query("select * from categories where id = '$category'");
+    $parentResult = mysqli_fetch_assoc($parentQ);
+    $parent = ((isset($_POST['parent']) && !empty($_POST['parent']))?sanitize($_POST['parent']): $parentResult['parent']);
+
+}
 if ($_POST){
+
+    $categories = sanitize($_POST['child']);
+    $price = sanitize($_POST['price']);
+    $list_price = sanitize($_POST['list_price']);
+    $sizes = sanitize($_POST['sizes']);
+    $description = sanitize($_POST['description']);
+    $dbpath = '';
+    $errors = array();
     if (!empty($_POST['sizes'])) {
         $sizeString = sanitize($_POST['sizes']);
         $sizeString = rtrim($sizeString, ',');
@@ -40,44 +66,60 @@ if ($_POST){
          $mimeExt = $mime[1];
          $tmpLoc = $photo['tmp_name'];
          $fileSize = $photo['size'];
-         $allowed = array('png', 'jpg', 'jpeg', 'gif');
+         $allowed = array('png', 'jpg', 'jpeg', 'gif', 'JPG');
+         $uploadName = md5(microtime(5)).'.'.$fileExt;
+         $uploadPath = BASEURL.'/images/products'. $uploadName;
+         $dbpath = '/images/products'.$uploadName;
+
          if ($mimeType != 'image') {
              $errors[] = 'Фаил должен быть изображением.';
          }
          if(!in_array($fileExt, $allowed)) {
-    $errors[] = 'Изображения должны быть в формате png, jpg, jpeg, gif.';
+         $errors[] = 'Изображения должны быть в формате png, jpg, jpeg, gif.';
+         }
+         if ($fileSize > 15000000) {
+             $errors[] = 'Размер файла не должен превышать 15MB';
+         }
+         if ($fileExt != $mimeExt && ($mimeExt == 'jpeg' && $fileExt != 'jpg')) {
+             $errors[] = 'Расширение файла не соответствует данному формату файла.';
          }
      }
-     if (!empty($errors)){
+     if (!empty($errors)) {
          echo display_errors($errors);
+
      }else{
          //update file and insert into database
+         move_uploaded_file($tmpLoc, $uploadPath);
+         $insertSql = "insert into products (`title`, `price`, `list_price`, `brand`, `categories`, `image`, `description`)
+          VALUES ('$title', '$price', '$list_price', '$brand', '$categories', '$sizes', '$dbpath', '$description')";
+          $db->query($insertSql);
+          header('Location: products.php');
      }
 }
 
 ?>
-    <h2 class="text-center">Добавить новое изделие</h2>
+    <h2 class="text-center"><?=((isset($_GET['edit']))?'Редактировать':'Добавить');?> новое изделие</h2>
     <hr>
-    <form action="products.php?add=1" method="post" enctype="multipart/form-data">
+    <form action="products.php?<?=((isset($_GET['edit']))?'edit='.$edit_id:'add=1');?>" method="post" enctype="multipart/form-data">
        <div class="form-group col-md-3">
            <label for="title">Название*: </label>
-           <input type="text" name="title" class="form-control" id="title" value="<?= ((isset($_POST['title']))?sanitize($_POST['title']): ''); ?>">
+           <input type="text" name="title" class="form-control" id="title" value="<?= $title;/*((isset($_POST['title']))?sanitize($_POST['title']): '');*/ ?>">
        </div>
         <div class="form-group col-md-3">
             <label for="brand">Brand*: </label>
             <select class="form-control" id="brand" name="brand">
-                <option value=""<?=((isset($_POST['brand']) && $_POST['$brand'] == '')?' selected' : '');  ?>></option>
-                 <?php while ($brand = mysqli_fetch_assoc($brandQuery)):  ?>
-                <option value="<?=$brand['id'];  ?>"<?= ((isset($_POST['brand']) && $_POST['brand'] == $brand['id'])? '  select' : '');  ?>><?=$brand['brand'];?></option>
+                <option value=""<?= (($brand =='')? /*((isset($_POST['brand']) && $_POST['$brand'] == '')?*/' selected' : '');  ?>></option>
+                 <?php while ($b= mysqli_fetch_assoc($brandQuery)):  ?>
+                <option value="<?=$b['id'];  ?>"<?=  (($brand == $b['id'])?  /* ((isset($_POST['brand']) && $_POST['brand'] == $brand['id'])? */'  selected' : ''); ?>><?=$b['brand'];?></option>
                  <?php endwhile; ?>
         </select>
         </div>
         <div class="form-group col-md-3">
             <label for="parent">Родительская категория*</label>
             <select class="form-control" id="parent" name="parent">
-                <option value=""<?=((isset($_POST['parent']) && $_POST['$parent'] == '')? 'selected': '' ); ?>></option>
-                <?php while($parent = mysqli_fetch_assoc($parentQuery)): ?>
-                 <option value="<?=$parent['id'];  ?>"<?=((isset($_POST['parent']) && $_POST['parent'] == $parent['id'])? ' select': '');  ?>><?=$parent['category'];?></option>
+                <option value=""<?=(($parent == '')? 'selected': '' ); ?>></option>
+                <?php while($p = mysqli_fetch_assoc($parentQuery)): ?>
+                 <option value="<?=$p['id'];  ?>"<?=(($parent == $p['id'])? ' selected': '');  ?>><?=$p['category'];?></option>
                 <?php endwhile;  ?>
             </select>
         </div>
@@ -97,11 +139,11 @@ if ($_POST){
         </div>
         <div class="form-group col-md-3">
             <label>Количество и размеры:</label>
-        <button class="btn btn-default form-control" onclick="jQuery('#sizesModal').modal('toggle'); return false;">Характеристики и размеры</button>
+        <button type="button" class="btn btn-default form-control" data-toggle="modal" onclick="jQuery('#sizesModal').modal('toggle'); return false;">Характеристики и размеры</button>
         </div>
         <div class="form-group col-md-3">
             <label for="sizes">Предворительное количество </label>
-            <input type="text" class="form-control" name="size" id="sizes" value="<?=((isset($_POST['sizes']))?$_POST['sizes']: '');?>" readonly>
+            <input type="text" class="form-control" name="sizes" id="sizes" value="<?=((isset($_POST['sizes']))?$_POST['sizes']: '');?>" readonly>
         </div>
         <div class="form-group col-md-6">
             <label for="photo">Фото изделия </label>
@@ -112,7 +154,8 @@ if ($_POST){
             <textarea id="description" name="description" class="form-control" rows="6"><?=((isset($_POST['description']))?sanitize($_POST['description']) : '');?></textarea>
         </div>
         <div class="form-group pull-right">
-        <input type="submit" value="Add Product" class="form-control btn btn-success" >
+            <a href="products.php" class="btn btn-default">Отмена</a>
+        <input type="submit" value="<?= ((isset($_GET['edit']))?'Редактировать' :'Добавить');?> изделие" class="btn btn-success" >
         </div><div class="clearfix"></div>
     </form>
     <!-- Modal-->
@@ -132,7 +175,7 @@ if ($_POST){
                     </div>
                         <div class="form-group col-md-2">
                             <label for="qty<?=$i; ?>">Количество</label>
-                            <input type="number" name="qty<?=$i; ?>" id="qty<?=$i; ?>" value="<?=((!empty($qArray[$i-1]))?$qArray[$i-1] :''); ?>" min="0" class="form-control">
+                            <input type="number" name="qty<?=$i; ?>" id="qty<?=$i;?>" value="<?=((!empty($qArray[$i-1]))?$qArray[$i-1] :''); ?>" min="0" class="form-control">
                         </div>
                    <?php endfor;  ?>
                 </div>
@@ -146,7 +189,9 @@ if ($_POST){
     </div><!-- /.modal -->
 
  <?php
-} else {
+
+}
+else {
 
     $sql = "select * from products where deleted = 0";
     $presults = $db->query($sql);
@@ -208,4 +253,5 @@ if ($_POST){
 
     <?php
 }
+
 include 'includes/footer.php';
