@@ -2,6 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/core/init.php';
 include 'includes/head.php';
 include 'includes/navigation.php';
+$dbpath = '';
 //$selected = sanitize($_POST['selected']);
 if (isset($_GET['add']) || isset($_GET['edit'])){
 $brandQuery = $db->query("select * from brand order by brand");
@@ -10,43 +11,65 @@ $title = ((isset($_POST['title']) && $_POST['title'] != '')?sanitize($_POST['tit
 $brand = ((isset($_POST['brand']) && $_POST['brand'] != '')?sanitize($_POST['brand']):'');
 $parent = ((isset($_POST['parent']) && $_POST['parent'] != '')?sanitize($_POST['parent']):'');
 $category = ((isset($_POST['child']) && $_POST['child'] != '')?sanitize($_POST['child']):'');
-
-
+$price = ((isset($_POST['price']) && $_POST['price'] != '')?sanitize($_POST['price']):'');
+$list_price = ((isset($_POST['list_price']) && $_POST['list_price'] != '')?sanitize($_POST['list_price']):'');
+$description= ((isset($_POST['description']) && $_POST['description'] != '')?sanitize($_POST['description']):'');
+$sizes= ((isset($_POST['sizes']) && $_POST['sizes'] != '')?sanitize($_POST['sizes']):'');
+$sizes = rtrim($sizes, ',');
+$saved_image = '';
+    ?>
+    <?php
 if (isset($_GET['edit'])) {
     $edit_id = (int)$_GET['edit'];
-    $productresults = $db->query("select * from products where id = '$edit_id'");
-    $product = mysqli_fetch_assoc($productresults);
+    $productResults = $db->query("select * from products where id = '$edit_id'");
+    $product = mysqli_fetch_assoc($productResults);
+    if (isset($_GET['delete_image'])) {
+        $image_url = $_SERVER['DOCUMENT_ROOT'].$product['image']; echo  $image_url;
+        unlink ($image_url);
+        $db->query("update products set image = '' where id = '$edit_id'");
+        //header('Location: products.php?edit='.$edit_id);
+    }
     $category = ((isset($_POST['child']) && $_POST['child'] != '')?sanitize($_POST['child']) : $product['categories']);
     $title = ((isset($_POST['title']) && !empty($_POST['title']))?sanitize($_POST['title']): $product['title']);
     $brand = ((isset($_POST['brand']) && !empty($_POST['brand']))?sanitize($_POST['brand']): $product['brand']);
     $parentQ = $db->query("select * from categories where id = '$category'");
     $parentResult = mysqli_fetch_assoc($parentQ);
     $parent = ((isset($_POST['parent']) && !empty($_POST['parent']))?sanitize($_POST['parent']): $parentResult['parent']);
-
+    $price = ((isset($_POST['price']) && !empty($_POST['price']))?sanitize($_POST['price']): $product['price']);
+    $list_price = ((isset($_POST['list_price']) && !empty($_POST['list_price']))?sanitize($_POST['list_price']): $product['list_price']);
+    $description = ((isset($_POST['description']) && !empty($_POST['description']))?sanitize($_POST['description']): $product['description']);
+    $sizes = ((isset($_POST['sizes']) && !empty($_POST['sizes']))?sanitize($_POST['sizes']): $product['sizes']);
+    $sizes = rtrim($sizes, ',');
+    $saved_image = (($product['image'] != '')?$product['image'] : '');
+    $dbpath = $saved_image;
 }
-if ($_POST){
+if (!empty( $sizes/*$_POST['sizes']*/)) {
+    $sizeString = sanitize( $sizes /*$_POST['sizes']*/);
+    $sizeString = rtrim($sizeString, ',');
+    // echo  $sizeString;
+    $sizesArray = explode(',',$sizeString );
+    $sArray = array();
+    $qArray = array();
+    foreach ($sizesArray as $ss) {
+        $s = explode(':', $ss);
+        $sArray[] = $s[0];
+        $qArray[] = $s[1];
+    }
+}else {
+    $sizesArray = array();
+}
 
-    $categories = sanitize($_POST['child']);
+    if ($_POST){
+
+   /* $categories = sanitize($_POST['child']);
     $price = sanitize($_POST['price']);
     $list_price = sanitize($_POST['list_price']);
     $sizes = sanitize($_POST['sizes']);
     $description = sanitize($_POST['description']);
+    */
     $dbpath = '';
     $errors = array();
-    if (!empty($_POST['sizes'])) {
-        $sizeString = sanitize($_POST['sizes']);
-        $sizeString = rtrim($sizeString, ',');
-         echo  $sizeString;
-        $sizesArray = explode(',',$sizeString );
-        $sArray = array();
-        $qArray = array();
-        foreach ($sizesArray as $ss) {
-            $s = explode(':', $ss);
-            $sArray[] = $s[0];
-            $qArray[] = $s[1];
-        }
-    }else{$sizesArray = array();
-    }
+
      $reqiired = array('title', 'brand', 'price', 'parent', 'child', 'sizes');
      foreach ($reqiired as $field) {
          if ($_POST[$field] == '') {
@@ -91,9 +114,15 @@ if ($_POST){
          //update file and insert into database
          move_uploaded_file($tmpLoc, $uploadPath);
          $insertSql = "insert into products (`title`, `price`, `list_price`, `brand`, `categories`, `image`, `description`)
-          VALUES ('$title', '$price', '$list_price', '$brand', '$categories', '$sizes', '$dbpath', '$description')";
-          $db->query($insertSql);
-          header('Location: products.php');
+          VALUES ('$title', '$price', '$list_price', '$brand', '$category', '$sizes', '$dbpath', '$description')";
+         if (isset($_GET['edit'])){
+             $insertSql = "update products set title = '$title', price = '$price', list_price = '$list_price', 
+             brand = '$brand', categories = '$category', sizes = '$sizes', image = '$dbpath', description = '$description'
+             WHERE id = '$edit_id'";
+         }
+
+         $db->query($insertSql);
+       //   header('Location: products.php');
      }
 }
 
@@ -126,16 +155,15 @@ if ($_POST){
         <div class="form-group col-md-3">
           <label for="child">Дочерняя категория*:</label>
             <select id="child" name="child" class="form-control">
-
             </select>
         </div>
         <div class="form-group col-md-3">
             <label for="price" >Цена*:</label>
-            <input type="text" id="price" name="price" class="form-control" value="<?=((isset($_POST['price']))?sanitize($_POST['price']) : ''); ?>">
+            <input type="text" id="price" name="price" class="form-control" value="<?= $price /*((isset($_POST['price']))?sanitize($_POST['price']) : '')*/; ?> грн.">
         </div>
         <div class="form-group col-md-3">
             <label for="price" >Прайс-лист*:</label>
-        <input type="text" id="list_price" name="list_price" class="form-control" value="<?=((isset($_POST['list_price']))?sanitize($_POST['list_price']) : ''); ?>">
+        <input type="text" id="list_price" name="list_price" class="form-control" value="<?= $list_price /*((isset($_POST['list_price']))?sanitize($_POST['list_price']) : '')*/ ; ?> грн.">
         </div>
         <div class="form-group col-md-3">
             <label>Количество и размеры:</label>
@@ -143,15 +171,22 @@ if ($_POST){
         </div>
         <div class="form-group col-md-3">
             <label for="sizes">Предворительное количество </label>
-            <input type="text" class="form-control" name="sizes" id="sizes" value="<?=((isset($_POST['sizes']))?$_POST['sizes']: '');?>" readonly>
+            <input type="text" class="form-control" name="sizes" id="sizes" value="<?= $sizes/*((isset($_POST['sizes']))?$_POST['sizes']: '')*/  ;?>" readonly>
         </div>
         <div class="form-group col-md-6">
+            <?php if ($saved_image != '') { ?>
+                <div class="saved-image">
+                    <img src="<?= $saved_image ;?>" alt="saved image">
+                     <a href="products.php?delete_image=1&edit=<?=$edit_id;  ?>" class="text-danger">Удалить изображение</a>
+                </div>
+            <?php } else{ ?>
             <label for="photo">Фото изделия </label>
             <input type="file" class="form-control" name="photo" id="photo">
+            <?php } ?>
         </div>
         <div class="form-group col-md-6">
-        <label for="description">Описание: </label>
-            <textarea id="description" name="description" class="form-control" rows="6"><?=((isset($_POST['description']))?sanitize($_POST['description']) : '');?></textarea>
+           <label for="description">Описание: </label>
+            <textarea id="description" name="description" class="form-control" rows="6"><?= $description/*((isset($_POST['description']))?sanitize($_POST['description']) : '')*/ ;?></textarea>
         </div>
         <div class="form-group pull-right">
             <a href="products.php" class="btn btn-default">Отмена</a>
@@ -255,3 +290,12 @@ else {
 }
 
 include 'includes/footer.php';
+?>
+<script>
+    jQuery('document').ready(function () {
+        get_child_options('<?=$category; ?>');
+        //updateSizes();
+    });
+</script>
+
+

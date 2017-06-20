@@ -3,21 +3,23 @@
 <script>
     function updateSizes() {
         var sizeString = '';
-        for (var i=1;i<=12;i++){
-            if (jQuery('#size'+i)!= ''){
+        for (var i=1; i<=12;i++){
+            if (jQuery('#size'+i).val()!= ''){
                 sizeString += jQuery('#size'+i).val()+ ':'+jQuery('#qty'+i).val()+',';
             }
         }
-        jQuery('#size').val(sizeString);
+        jQuery('#sizes').val(sizeString);
     }
-    </script>
-<script>
-    function get_child_options() {
+
+    function get_child_options(selected) {
+        if (typeof  selected === 'undefined') {
+            var selected = '';
+        }
         var parentID = jQuery('#parent').val();
         jQuery.ajax({
             url: '/admin/parsers/child_categories.php',
             type: 'POST',
-            data: {parentID : parentID},
+            data: {parentID : parentID, selected : selected},
             success: function (data) {
                 jQuery('#child').html(data);
             },
@@ -25,7 +27,9 @@
                 alert("Что-то не так с дочерней опцией")},
         });
     }
-    jQuery('select[name="parent"]').change(get_child_options);
+    jQuery('select[name="parent"]').change(function () {
+        get_child_options();
+    });
 </script>
 </body>
 </html>
